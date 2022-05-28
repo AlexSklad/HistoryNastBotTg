@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<UrlData>
+	<Region name="Russia" >
+		<site>
+			<url></url>
+			<text></text>
+		</site>		
+	</Region>
+	<Region name="England">
+		<site>
+			<url>https://zen.yandex.ru/media/cool_history/anna-bolein-protiv-kardinala-uolsi-v-dele-cheini-6286d1420855bc6b6a7bf4f7</url>
+			<text>Анна Болейн против кардинала Уолси в деле Чейни</text>
+		</site>		
+		<site>
+			<url>https://zen.yandex.ru/media/cool_history/rebenok-anny-klevskoi-i-genriha-viii-tiudora-otkuda-poshel-etot-sluh-6280ec3bf8c8a6632264df2f</url>
+			<text>Ребенок Анны Клевской и Генриха VIII Тюдора: откуда пошел этот слух?</text>
+		</site>		
+		<site>
+			<url>https://zen.yandex.ru/media/cool_history/anna-nevill-tetia-sozdatelia-korolei-628a23a8ca007263a733b815</url>
+			<text>Анна Невилл, тётя создателя королей</text>
+		</site>		
+		<site>
+			<url>https://zen.yandex.ru/media/id/601717a7986fec271829bdbc/6241fcef3ce906352598cd5c</url>
+			<text>Маргарет Бофорт</text>
+		</site>		
+		<site>
+			<url>https://zen.yandex.ru/media/cool_history/vnebrachnaia-sestra-korolevy-viktorii-62790f4ca240f645e15db6bf</url>
+			<text>Внебрачная сестра королевы Виктории</text>
+		</site>		
+	
+	</Region>
+</UrlData>
+	
