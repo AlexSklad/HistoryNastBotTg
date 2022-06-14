@@ -48,6 +48,13 @@ namespace HistoryNastBot
             {
                 var message = update.Message;
 
+                if (message.Text == null)
+                {
+                    await botClient.SendTextMessageAsync(message.Chat, "К сожалению, я понимаю только текстовые команды", replyMarkup: GetButtons());
+                    return;
+
+                }
+
                 if (message.Text.ToLower() == "/start")
                 {
                     await botClient.SendTextMessageAsync(message.Chat, "Добро пожаловать на борт, добрый путник!", replyMarkup: GetButtons());
@@ -75,8 +82,35 @@ namespace HistoryNastBot
                     case "Англия":
                         await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("England"), ParseMode.Html, replyMarkup: GetRegionButtons());
                         break;
-                    case "Россия":
-                        await botClient.SendTextMessageAsync(message.Chat, "Тестовая кнопка 3", replyMarkup: GetRegionButtons());
+                    case "Русь":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Russia"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Франция":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("France"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Германия":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Germany"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Скандинавия":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Scandinavia"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Ацтеки":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Aztecs"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Иерусалим":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Jerusalem"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Славянские народы":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Slavs"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Шотландия":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Scotland"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Испания":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Spain"), ParseMode.Html, replyMarkup: GetRegionButtons());
+                        break;
+                    case "Прочие":
+                        await botClient.SendTextMessageAsync(message.Chat, GetRndUrlReply("Other"), ParseMode.Html, replyMarkup: GetRegionButtons());
                         break;
                     case "Меню":
                         await botClient.SendTextMessageAsync(message.Chat, "Возврат в меню", replyMarkup: GetButtons());
@@ -97,32 +131,59 @@ namespace HistoryNastBot
                 {
                     new List<KeyboardButton>{ new KeyboardButton (SiteText), new KeyboardButton (RndHistory), new KeyboardButton ("Кнопка 3")}
                 }
-            );
+            ){ ResizeKeyboard = true };
         }
 
         private static IReplyMarkup GetRegionButtons()
         {
-            return new ReplyKeyboardMarkup
-            (
-                new List<List<KeyboardButton>>
-                {
-                    new List<KeyboardButton>{ new KeyboardButton ("Англия"), new KeyboardButton ("Россия"), new KeyboardButton ("Меню")}
-                }
-            );
+            ReplyKeyboardMarkup keyboard = new(new[]
+                                                    {
+                                                        new KeyboardButton[] {"Англия", "Русь", "Франция" },
+                                                        new KeyboardButton[] { "Германия", "Скандинавия", "Ацтеки" },
+                                                        new KeyboardButton[] { "Иерусалим", "Славянские народы", "Шотландия" },
+                                                        new KeyboardButton[] { "Испания", "Прочие", "Меню" }
+                                                    }
+                                              ){ ResizeKeyboard = true };
+            return keyboard;
+            //return new ReplyKeyboardMarkup
+            //(
+            //    new List<List<KeyboardButton>>
+            //    {
+            //        new List<KeyboardButton>{ new KeyboardButton ("Англия"), new KeyboardButton ("Русь"), new KeyboardButton("Франция"), new KeyboardButton("Германия"),
+            //                                  new KeyboardButton("Скандинавия"), new KeyboardButton ("Ацтеки"), new KeyboardButton ("Иерусалим"), new KeyboardButton ("Славянские народы"),
+            //                                  new KeyboardButton ("Шотландия"), new KeyboardButton ("Испания"), new KeyboardButton ("Прочие"), new KeyboardButton ("Меню")}
+            //    }
+            //)
+            //{ResizeKeyboard = true };
         }
 
         private string GetRndUrlReply(string Name)
         {
+            string error = "Данные не найдены";
+
             XmlHistoryList historyList = new XmlHistoryList(Name);
 
-            int rndValue = rnd.Next(0, historyList.Links.Count - 1);
+            if (historyList.Links != null && historyList.Links.Count > 0)
+            {
+                int rndValue = rnd.Next(0, historyList.Links.Count - 1);
 
-            var reply = GetUrlReply(historyList.Links[rndValue].Url, historyList.Links[rndValue].Name);
-            return reply;
+                var reply = GetUrlReply(historyList.Links[rndValue].Url, historyList.Links[rndValue].Name);
+
+                if (!string.IsNullOrEmpty(reply))
+                    return reply;
+                else
+                    return error;
+            }
+            else
+            {
+                return error;
+            }
         }
 
         private string GetUrlReply(string url, string text)
         {
+            if (string.IsNullOrEmpty(url)) return null;
+
             var reply = $"<a href=\"{url}\"> {text} </a>\n";
             return reply;
         }
