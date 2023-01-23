@@ -15,7 +15,7 @@ namespace HistoryNastBot
 
     class Program
     {
-        static BotHelper bot = new BotHelper(token: "5487833548:AAH3eCmEdFRrVQ2RKJjPZ9zhL8zLqWYzvWA");
+        static BotHelper bot = new BotHelper(token: "TOKEN");
         //public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         //{
         //    // Некоторые действия
